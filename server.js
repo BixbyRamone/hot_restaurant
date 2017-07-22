@@ -17,6 +17,10 @@ let reservations = [{
     "customerID": "Table 1"
 }];
 
+let waitlist = [{
+
+}]
+
 //  
 
 app.get("/", function (req, res) {
@@ -31,17 +35,22 @@ app.get("/reserve", function (req, res) {
     res.sendFile(path.join(__dirname, "reserve.html"));
 });
 
-app.get("/api/:tables?", function (req, res) {
+app.get("/api/table", function (req, res) {
 
-    console.log("Checking");
+    console.log("Checking Tables");
     console.log(reservations);
     return res.json(reservations);
 
+});
+app.get("/api/waitlist", function (req, res) {
+
+    console.log("Checking Waitlist");
+    console.log(waitlist);
+    return res.json(waitlist);
 
 
 });
-
-app.post("/api/add", function (req, res) {
+app.post("/api/addreservation", function (req, res) {
     let reservation = req.body;
 
     console.log(reservation);
@@ -49,6 +58,16 @@ app.post("/api/add", function (req, res) {
 
     res.json(reservation);
 });
+
+app.post("/api/addwaitlist", function (req, res) {
+    let newwaitlist = req.body;
+
+    console.log(newwaitlist);
+    waitlist.push(newwaitlist);
+
+    res.json(newwaitlist);
+});
+
 
 app.listen(PORT, function () {
     console.log("App listening on PORT " + PORT);
