@@ -1,87 +1,72 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-  <meta charset="UTF-8">
-  <title>Hot Restaurant</title>
-  <!-- Latest compiled and minified CSS & JS -->
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
-  <script src="https://code.jquery.com/jquery.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
-
+    <meta charset="UTF-8">
+    <title>Hot Restaurant</title>
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
 </head>
+
 <body>
-
-  <div class="container">
-    <div class="jumbotron">
-      <h1>View Seating</h1>
-      <h3>The hottest restaurant around!</h3>
-      <hr>
-      <a href="/add"><button type="button" class="btn btn-danger btn-lg"><span class="glyphicon glyphicon-plus"></span>New Customer</button></a>
-      <a href="/add"><button type="button" class="btn btn-lg"><span class="glyphicon glyphicon-home"></span></button></a>
-    </div>
-    <div class="row">
-
-      <div class="col-lg-12">
-        
-
-        <div class="panel panel-default">
-          <div class="panel-heading">
-            <h3 class="panel-title"><strong>Seating</strong></h3>
-          </div>
-          <div class="panel-body">
-            <div class="well">
-              <h2 id="name"></h2>
-              <div id="stats">
-                <div></div>
-              </div>
+    <div class="container">
+        <div class="jumbotron">
+            <h1 class="text-center">
+            <span class="glyphicon glyphicon-fire"></span>
+            Hot Restaurant
+            </h1>
+            <hr>
+            <h2 class="text-center">We Only have 5 tables! Book your seat before they are gone!</h2>
+            <br>
+            <div class="text-center">
+                <a href="/">
+                    <button type="button" class="btn btn-lg btn-default">
+                        <span class="glyphicon glyphicon-home"></span>
+                    </button>
+                </a>
+                <a href="/reserve">
+                    <button type="button" class="btn btn-lg btn-danger">
+                        <span class="glyphicon glyphicon-credit-card">
+                      
+                    </span> Make Reservation
+                    </button>
+                </a>
             </div>
-          </div>
         </div>
-
-
-        <div class="panel panel-default">
-          <div class="panel-heading">
-            <h3 class="panel-title"><strong>Waiting List</strong></h3>
-          </div>
-          <div class="panel-body">
-            <div class="well">
-              <h2 id="name"></h2>
-              <div id="stats">
-                <div></div>
-              </div>
+        <footer class="footer">
+            <div class="container">
+                <p>
+                    <a href="/api/table">API Table Link</a> |
+                    <a href="/api/waitlist">API Wait List</a>
+                </p>
             </div>
-          </div>
-        </div>
-
-
-      </div>
-      
-      </div>
-
+        </footer>
     </div>
-  </div>
-
-  <script type="text/javascript">
+    <script type="text/javascript">
     $("#search-btn").on("click", function() {
-      var searchedCharacter = $("#character-search").val().trim();
+        var searchedCharacter = $("#character-search").val().trim();
 
-      searchedCharacter = searchedCharacter.replace(/\s+/g, "").toLowerCase();
+        searchedCharacter = searchedCharacter.replace(/\s+/g, "").toLowerCase();
 
-      $.get("/api/" + searchedCharacter, function(data) {
-        console.log(data);
-        if (data) {
-          $("#stats").show();
-          $("#name").text(data.name);
-          $("#role").text(data.role);
-          $("#age").text(data.age);
-          $("#force-points").text(data.forcePoints);
-        }
-        else {
-          $("#name").text("The force is not strong with this one. Your character was not found.");
-          $("#stats").hide();
-        }
-      });
+        $.get("/api/" + searchedCharacter, function(data) {
+            console.log(data);
+            if (data) {
+                $("#stats").show();
+                $("#name").text(data.name);
+                $("#role").text(data.role);
+                $("#age").text(data.age);
+                $("#force-points").text(data.forcePoints);
+            } else {
+                $("#name").text("The force is not strong with this one. Your character was not found.");
+                $("#stats").hide();
+            }
+        });
     });
-  </script>
+    </script>
 </body>
+
 </html>
