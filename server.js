@@ -1,51 +1,55 @@
-// Dependencies
 var express = require("express");
 var bodyParser = require("body-parser");
 var path = require("path");
 
-//Express setup
-
 var app = express();
-var PORT = 3000;
+var PORT = process.env.PORT || 3000;
 
-// Data Parsing
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.text());
 app.use(bodyParser.json({ type: "application/vnd.api+json" }));
 
+let reservations = [{
+    "customerName": "Test Table",
+    "phoneNumber": "123-456-7890",
+    "customerEmail": "test@gmail.com",
+    "customerID": "Table 1"
+}];
 
-var reservation = [{
-  name: "",
-  
-  number: "",
-  
-  email: "",
-  
-  uniqueid: "",
-  
- }];
+//  
 
-   if () {
-    console.log();
+app.get("/", function (req, res) {
+    res.sendFile(path.join(__dirname, "index.html"));
+});
 
-    for (var i = 0; i < reservation.length; i++) {
-      if ( === reservation[i].routeName) {
-        return res.json(reservation[i]);
-      }
-    }
-    return res.json(false);
-  }
-  return res.json();
-}; 
+app.get("/tables", function (req, res) {
+    res.sendFile(path.join(__dirname, "Tables page HTML"));
+});
 
+app.get("/reserve", function (req, res) {
+    res.sendFile(path.join(__dirname, "reserve.html"));
+});
 
+app.get("/api/:tables?", function (req, res) {
 
-
+    console.log("Checking");
+    console.log(reservations);
+    return res.json(reservations);
 
 
-// Listener
 
-app.listen(PORT, function() {
-  console.log("Listening on PORT" + PORT);
+});
+
+app.post("/api/add", function (req, res) {
+    let reservation = req.body;
+
+    console.log(reservation);
+    reservations.push(reservation);
+
+    res.json(reservation);
+});
+
+app.listen(PORT, function () {
+    console.log("App listening on PORT " + PORT);
 });
